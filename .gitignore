@@ -1,0 +1,35 @@
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Maven (만약 Maven 사용 시)
+target/
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS 파일
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# 환경설정
+application-*.yml
+application-*.properties
+
+# 기타
+out/
+bin/
+
