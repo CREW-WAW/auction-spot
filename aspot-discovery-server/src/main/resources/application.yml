@@ -1,3 +1,8 @@
 spring:
   application:
     name: aspot-discovery-server
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
