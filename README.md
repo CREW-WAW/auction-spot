@@ -22,9 +22,9 @@ Aspot은 동네 인증을 기반으로 한 지역 커뮤니티 경매 서비스�
 ## 🛠️ 기술 스택
 
 ### 1. Language / Framework
-- **Backend**: Java 17, Spring Boot 3.4.5, Spring Cloud, JOOQ
+- **Backend**: Java 21, Spring Boot 3.4.5, Spring Cloud, JOOQ
 - **Frontend**: (추후 정의)
-- **Mobile**: (추후 정의)
+- **Mobile**: Flutter
 
 ### 2. Infra
 - **서버 환경**: AWS EC2
