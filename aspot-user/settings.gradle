@@ -1,1 +1,3 @@
 rootProject.name = 'aspot-user'
+
+include ':aspot-common'

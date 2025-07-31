@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'nu.studer.jooq' version '8.2'
+}
+
+group = 'com.aspot'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '21'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jooq:jooq'
+    jooqGenerator 'mysql:mysql-connector-java:8.0.33'
+
+}
+
+jooq {
+    version = '3.18.6'
+    configurations {
+        main {
+            generationTool {
+                jdbc {
+                    driver = 'com.mysql.cj.jdbc.Driver'
+                    url = 'jdbc:mysql://localhost:3306/auction-spot'
+                    user = 'root'
+                    password = 'root'
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        name = 'org.jooq.meta.mysql.MySQLDatabase'
+                        inputSchema = 'auction-spot'
+                    }
+                    generate {
+                        daos = true
+                        pojos = true
+                        javaTimeTypes = true
+                    }
+                    target {
+                        packageName = 'com.aspot.jooq.generated'
+                        directory = 'src/main/java'
+                    }
+                }
+            }
+        }
+    }
+}

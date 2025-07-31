@@ -1,1 +1,3 @@
 rootProject.name = 'aspot-auction'
+
+include ':aspot-common'
