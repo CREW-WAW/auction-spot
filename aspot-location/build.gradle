@@ -30,6 +30,7 @@ ext {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jooq'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 	implementation 'org.springframework.kafka:spring-kafka'
 	compileOnly 'org.projectlombok:lombok'
@@ -39,6 +40,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	
+	implementation project(':aspot-common')
 }
 
 dependencyManagement {

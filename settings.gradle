@@ -1,0 +1,8 @@
+rootProject.name = 'auction-spot'
+
+include 'aspot-common'
+include 'aspot-user'
+include 'aspot-auction'
+include 'aspot-location'
+include 'aspot-notification'
+include 'aspot-discovery-server'

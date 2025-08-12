@@ -1,11 +1,13 @@
 spring:
   application:
     name: aspot-location
+  
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/aspotdb}
-    username: ${SPRING_DATASOURCE_USERNAME:aspotuser}
-    password: ${SPRING_DATASOURCE_PASSWORD:aspotpassword}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/auction_spot?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  
   kafka:
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:29092,localhost:29093,localhost:29094}
     producer:
@@ -18,6 +20,10 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: com.spot.auction.*
+  
+  cloud:
+    discovery:
+      enabled: true
 
 eureka:
   client:
@@ -29,4 +35,4 @@ eureka:
     prefer-ip-address: true
 
 server:
-  port: 8082
+  port: 8084

@@ -1,0 +1,22 @@
+package com.spot.auction.aspot_auction.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuctionBidHistory {
+    private Long seq;
+    private Long userSeq;
+    private Long auctionItemSeq;
+    private BigDecimal bidPrice;
+    private Boolean isInstantBid;
+    private LocalDateTime createdAt;
+}

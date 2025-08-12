@@ -33,3 +33,9 @@ application-*.properties
 out/
 bin/
 
+# JOOQ generated files (will be generated during build)
+aspot-common/src/main/java/com/spot/auction/common/generated/
+
+# Docker volumes
+mysql-data/
+
