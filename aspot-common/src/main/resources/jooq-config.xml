@@ -13,6 +13,13 @@
             <inputSchema>aspotdb</inputSchema>
             <includes>.*</includes>
             <excludes></excludes>
+            <forcedTypes>
+                <forcedType>
+                    <name>BOOLEAN</name>
+                    <types>.*</types>
+                    <includeTypes>IS_VERIFIED</includeTypes>
+                </forcedType>
+            </forcedTypes>
         </database>
         
         <generate>

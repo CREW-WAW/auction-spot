@@ -80,7 +80,7 @@ public class AuctionItemService {
             throw new RuntimeException("Not authorized to delete this item");
         }
 
-        auctionItemRepository.delete(item);
+        auctionItemRepository.deleteById(id);
     }
 
     private AuctionItemDto convertToDto(AuctionItem item) {

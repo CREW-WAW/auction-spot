@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
     id 'org.flywaydb.flyway' version '10.8.1'
 }
 
@@ -36,6 +37,15 @@ dependencies {
     
     // Jakarta Validation API - JOOQ 생성된 코드에 필요
     implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
+}
+
+// Publishing 설정
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 // JOOQ 코드 생성을 위한 태스크

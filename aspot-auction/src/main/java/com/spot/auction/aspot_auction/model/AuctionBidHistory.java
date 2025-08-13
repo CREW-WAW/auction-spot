@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,7 +15,7 @@ public class AuctionBidHistory {
     private Long seq;
     private Long userSeq;
     private Long auctionItemSeq;
-    private BigDecimal bidPrice;
-    private Boolean isInstantBid;
+    private Integer bidPrice;
+    private Byte isInstantBid;
     private LocalDateTime createdAt;
 }

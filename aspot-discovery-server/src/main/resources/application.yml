@@ -1,3 +1,6 @@
+server:
+  port: 8761
+
 spring:
   application:
     name: aspot-discovery-server
@@ -6,3 +9,5 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+  server:
+    wait-time-in-ms-when-sync-empty: 0

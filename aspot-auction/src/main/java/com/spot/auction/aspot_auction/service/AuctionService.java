@@ -11,13 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AuctionService {
 
     private final AuctionItemRepository auctionItemRepository;
-
-    public AuctionService(AuctionItemRepository auctionItemRepository) {
-        this.auctionItemRepository = auctionItemRepository;
-    }
 
     public List<AuctionItemDto> getTodayAuctions() {
         LocalDate today = LocalDate.now();

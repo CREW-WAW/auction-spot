@@ -22,7 +22,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: com.spot.auction.*
+        spring.json.trusted.packages: com.spot.notification.*
   
   cloud:
     discovery:
@@ -31,11 +31,11 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${eureka_url:http://127.0.0.1:8761/eureka}
   instance:
     prefer-ip-address: true
 
 logging:
   level:
-    com.spot.auction: DEBUG
+    com.spot.notification: DEBUG
 

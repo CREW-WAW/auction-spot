@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static com.spot.auction.common.generated.Tables.TB_AUCTION_ITEM;
 
@@ -24,10 +25,11 @@ public class AuctionItemRepository {
                 .fetchInto(AuctionItem.class);
     }
 
-    public AuctionItem findById(Long id) {
-        return dslContext.selectFrom(TB_AUCTION_ITEM)
+    public Optional<AuctionItem> findById(Long id) {
+        AuctionItem result = dslContext.selectFrom(TB_AUCTION_ITEM)
                 .where(TB_AUCTION_ITEM.SEQ.eq(id))
                 .fetchOneInto(AuctionItem.class);
+        return Optional.ofNullable(result);
     }
 
     public List<AuctionItem> findByAuctionDate(LocalDate auctionDate) {

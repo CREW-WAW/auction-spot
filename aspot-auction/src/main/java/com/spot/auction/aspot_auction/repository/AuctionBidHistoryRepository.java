@@ -5,6 +5,7 @@ import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.spot.auction.common.generated.Tables.TB_AUCTION_BID_HISTORY;
 
@@ -31,6 +32,13 @@ public class AuctionBidHistoryRepository {
                 .fetchInto(AuctionBidHistory.class);
     }
 
+    public Optional<AuctionBidHistory> findById(Long id) {
+        AuctionBidHistory result = dslContext.selectFrom(TB_AUCTION_BID_HISTORY)
+                .where(TB_AUCTION_BID_HISTORY.SEQ.eq(id))
+                .fetchOneInto(AuctionBidHistory.class);
+        return Optional.ofNullable(result);
+    }
+
     public AuctionBidHistory save(AuctionBidHistory bid) {
         if (bid.getSeq() == null) {
             // Insert
@@ -50,5 +58,11 @@ public class AuctionBidHistoryRepository {
                     .execute();
             return bid;
         }
+    }
+
+    public void deleteById(Long id) {
+        dslContext.deleteFrom(TB_AUCTION_BID_HISTORY)
+                .where(TB_AUCTION_BID_HISTORY.SEQ.eq(id))
+                .execute();
     }
 }

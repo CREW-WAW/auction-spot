@@ -38,6 +38,12 @@ public class BidService {
                 .collect(Collectors.toList());
     }
 
+    public BidDto getBidById(Long id) {
+        AuctionBidHistory bid = auctionBidHistoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Bid not found"));
+        return convertToDto(bid);
+    }
+
     private BidDto convertToDto(AuctionBidHistory bid) {
         return BidDto.builder()
                 .seq(bid.getSeq())
