@@ -1,0 +1,138 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: aspot-gateway
+  
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # 사용자 서비스 라우팅
+        - id: user-service
+          uri: lb://aspot-user
+          predicates:
+            - Path=/api/users/**
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=0
+            - name: CircuitBreaker
+              args:
+                name: user-service-circuit-breaker
+                fallbackUri: forward:/fallback/user-service
+        
+        # 경매 서비스 라우팅
+        - id: auction-service
+          uri: lb://aspot-auction
+          predicates:
+            - Path=/api/auctions/**
+            - Path=/api/items/**
+            - Path=/api/bids/**
+          filters:
+            - StripPrefix=0
+            - name: CircuitBreaker
+              args:
+                name: auction-service-circuit-breaker
+                fallbackUri: forward:/fallback/auction-service
+        
+        # 위치 서비스 라우팅
+        - id: location-service
+          uri: lb://aspot-location
+          predicates:
+            - Path=/api/locations/**
+          filters:
+            - StripPrefix=0
+            - name: CircuitBreaker
+              args:
+                name: location-service-circuit-breaker
+                fallbackUri: forward:/fallback/location-service
+        
+        # 알림 서비스 라우팅
+        - id: notification-service
+          uri: lb://aspot-notification
+          predicates:
+            - Path=/api/chats/**
+          filters:
+            - StripPrefix=0
+            - name: CircuitBreaker
+              args:
+                name: notification-service-circuit-breaker
+                fallbackUri: forward:/fallback/notification-service
+
+  # Redis 설정 (Rate Limiting용)
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+
+# Eureka 설정
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+# Actuator 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway,circuitbreakers
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Logging 설정
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG
+    com.spot.auction.gateway: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Resilience4j 설정
+resilience4j:
+  circuitbreaker:
+    instances:
+      user-service-circuit-breaker:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 5
+      auction-service-circuit-breaker:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 5
+      location-service-circuit-breaker:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 5
+      notification-service-circuit-breaker:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 5
+  timelimiter:
+    instances:
+      user-service-circuit-breaker:
+        timeout-duration: 5s
+      auction-service-circuit-breaker:
+        timeout-duration: 5s
+      location-service-circuit-breaker:
+        timeout-duration: 5s
+      notification-service-circuit-breaker:
+        timeout-duration: 5s
