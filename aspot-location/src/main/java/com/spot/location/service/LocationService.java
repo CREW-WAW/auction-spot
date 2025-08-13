@@ -1,5 +1,6 @@
 package com.spot.location.service;
 
+import com.spot.auction.common.generated.enums.TbUserLocationAuthAuthStatus;
 import com.spot.location.dto.LocationDto;
 import com.spot.location.dto.LocationVerifyRequest;
 import com.spot.location.model.Location;
@@ -40,7 +41,7 @@ public class LocationService {
         UserLocationAuth auth = UserLocationAuth.builder()
                 .userSeq(userId)
                 .locationSeq(savedLocation.getSeq())
-                .authStatus(UserLocationAuth.AuthStatus.PENDING)
+                .authStatus(TbUserLocationAuthAuthStatus.PENDING)
                 .requestedAt(LocalDateTime.now())
                 .isActive(true)
                 .build();

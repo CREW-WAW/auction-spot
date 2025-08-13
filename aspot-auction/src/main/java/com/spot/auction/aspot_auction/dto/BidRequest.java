@@ -6,5 +6,5 @@ import lombok.Data;
 public class BidRequest {
     private Long auctionItemSeq;
     private Integer bidPrice;
-    private Byte isInstantBid;
+    private Boolean isInstantBid;
 }

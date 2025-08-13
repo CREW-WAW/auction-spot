@@ -1,5 +1,6 @@
 package com.spot.location.model;
 
+import com.spot.auction.common.generated.enums.TbUserLocationAuthAuthStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,14 +16,10 @@ public class UserLocationAuth {
     private Long seq;
     private Long userSeq;
     private Long locationSeq;
-    private AuthStatus authStatus;
+    private TbUserLocationAuthAuthStatus authStatus;
     private LocalDateTime requestedAt;
     private LocalDateTime approvedAt;
     private LocalDateTime expiredAt;
     private Boolean isActive;
     private LocalDateTime createdAt;
-
-    public enum AuthStatus {
-        PENDING, APPROVED, REJECTED, EXPIRED
-    }
 }

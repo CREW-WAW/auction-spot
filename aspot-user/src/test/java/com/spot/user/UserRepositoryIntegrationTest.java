@@ -1,8 +1,8 @@
-package com.spot.auction.aspot_user;
+package com.spot.user;
 
 import com.spot.auction.common.generated.enums.TbUserRole;
-import com.spot.auction.aspot_user.model.User;
-import com.spot.auction.aspot_user.repository.UserRepository;
+import com.spot.user.model.User;
+import com.spot.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

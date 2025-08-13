@@ -21,7 +21,7 @@ public class UserLocationAuthRepository {
             return dslContext.insertInto(TB_USER_LOCATION_AUTH)
                     .set(TB_USER_LOCATION_AUTH.USER_SEQ, auth.getUserSeq())
                     .set(TB_USER_LOCATION_AUTH.LOCATION_SEQ, auth.getLocationSeq())
-                    .set(TB_USER_LOCATION_AUTH.AUTH_STATUS, auth.getAuthStatus().name())
+                    .set(TB_USER_LOCATION_AUTH.AUTH_STATUS, auth.getAuthStatus())
                     .set(TB_USER_LOCATION_AUTH.REQUESTED_AT, auth.getRequestedAt())
                     .set(TB_USER_LOCATION_AUTH.APPROVED_AT, auth.getApprovedAt())
                     .set(TB_USER_LOCATION_AUTH.EXPIRED_AT, auth.getExpiredAt())
@@ -31,7 +31,7 @@ public class UserLocationAuthRepository {
         } else {
             // Update
             dslContext.update(TB_USER_LOCATION_AUTH)
-                    .set(TB_USER_LOCATION_AUTH.AUTH_STATUS, auth.getAuthStatus().name())
+                    .set(TB_USER_LOCATION_AUTH.AUTH_STATUS, auth.getAuthStatus())
                     .set(TB_USER_LOCATION_AUTH.APPROVED_AT, auth.getApprovedAt())
                     .set(TB_USER_LOCATION_AUTH.EXPIRED_AT, auth.getExpiredAt())
                     .set(TB_USER_LOCATION_AUTH.IS_ACTIVE, auth.getIsActive())

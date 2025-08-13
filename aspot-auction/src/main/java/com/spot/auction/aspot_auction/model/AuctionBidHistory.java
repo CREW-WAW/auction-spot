@@ -16,6 +16,6 @@ public class AuctionBidHistory {
     private Long userSeq;
     private Long auctionItemSeq;
     private Integer bidPrice;
-    private Byte isInstantBid;
+    private Boolean isInstantBid;
     private LocalDateTime createdAt;
 }

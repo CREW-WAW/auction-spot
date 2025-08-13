@@ -31,8 +31,10 @@ public class ChatService {
     }
 
     public ChatRoomDto getChatRoomDetail(Long roomId) {
-        ChatRoom chatRoom = chatRoomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Chat room not found"));
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId);
+        if (chatRoom == null) {
+            throw new RuntimeException("Chat room not found");
+        }
         
         List<ChatMessage> messages = chatMessageRepository.findByChatRoomSeqOrderByCreatedAtAsc(roomId);
         
@@ -46,8 +48,10 @@ public class ChatService {
 
     @Transactional
     public ChatMessageDto sendMessage(Long roomId, Long userId, ChatMessageRequest request) {
-        ChatRoom chatRoom = chatRoomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Chat room not found"));
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId);
+        if (chatRoom == null) {
+            throw new RuntimeException("Chat room not found");
+        }
 
         // 사용자가 해당 채팅방의 참여자인지 확인
         if (!chatRoom.getSellerSeq().equals(userId) && !chatRoom.getBuyerSeq().equals(userId)) {
