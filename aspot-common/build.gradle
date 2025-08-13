@@ -1,5 +1,6 @@
 plugins {
     id 'java-library'
+    id 'org.flywaydb.flyway' version '10.8.1'
 }
 
 group = 'com.spot.auction'
@@ -9,16 +10,85 @@ sourceCompatibility = '21'
 repositories {
     mavenCentral()
 }
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
 dependencies {
-    implementation 'org.jooq:jooq'
+    implementation 'org.jooq:jooq:3.20.5'
+    implementation 'org.springframework:spring-web:6.2.4'
+    implementation 'org.springframework:spring-context:6.2.4'
     
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+    
+    implementation 'org.slf4j:slf4j-api:2.0.12'
+    
+    // JOOQ 코드 생성을 위한 의존성
+    implementation 'com.mysql:mysql-connector-j:8.3.0'
+    
+    // JOOQ 코드 생성 전용 의존성
+    implementation 'org.jooq:jooq-meta:3.20.5'
+    implementation 'org.jooq:jooq-codegen:3.20.5'
+    
+    // Jakarta Validation API - JOOQ 생성된 코드에 필요
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
+}
+
+// JOOQ 코드 생성을 위한 태스크
+task generateJooqCode(type: JavaExec) {
+    group = 'code generation'
+    description = 'Generate JOOQ classes from database schema'
+    
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'org.jooq.codegen.GenerationTool'
+    
+    // JOOQ 설정 파일 경로
+    args 'src/main/resources/jooq-config.xml'
+    
+    // 출력 디렉토리 생성
+    doFirst {
+        file('src/main/java/com/spot/auction/common/generated').mkdirs()
+        println "Generating JOOQ code..."
+        println "Output directory: src/main/java/com/spot/auction/common/generated"
+        println "Config file: src/main/resources/jooq-config.xml"
+    }
+    
+    // 입력과 출력 설정 - 항상 실행되도록 설정
+    inputs.file 'src/main/resources/jooq-config.xml'
+    outputs.dir 'src/main/java/com/spot/auction/common/generated'
+    
+    // 오류 처리 개선
+    ignoreExitValue = true
+    
+    // 항상 실행되도록 설정
+    outputs.upToDateWhen { false }
+    
+    doLast {
+        def generatedDir = file('src/main/java/com/spot/auction/common/generated')
+        if (generatedDir.exists() && generatedDir.listFiles()?.length > 0) {
+            println "JOOQ code generation successful!"
+            println "Generated files:"
+            generatedDir.eachFileRecurse { file ->
+                if (file.isFile()) {
+                    println "  - ${file.path}"
+                }
+            }
+        } else {
+            println "Warning: JOOQ code generation may have failed - no files were generated"
+            println "Please check your database connection and schema configuration"
+        }
+    }
+}
+
+// JOOQ 코드 생성을 위한 별도 태스크
+task jooqCodegen {
+    group = 'code generation'
+    description = 'Generate JOOQ code and verify'
+    dependsOn generateJooqCode
 }
 
 

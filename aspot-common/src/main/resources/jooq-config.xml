@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.18.7.xsd">
+    <jdbc>
+        <driver>com.mysql.cj.jdbc.Driver</driver>
+        <url>jdbc:mysql://localhost:3306/aspotdb</url>
+        <username>root</username>
+        <password>root</password>
+    </jdbc>
+    
+    <generator>
+        <database>
+            <name>org.jooq.meta.mysql.MySQLDatabase</name>
+            <inputSchema>aspotdb</inputSchema>
+            <includes>.*</includes>
+            <excludes></excludes>
+        </database>
+        
+        <generate>
+            <deprecated>false</deprecated>
+            <records>true</records>
+            <immutablePojos>true</immutablePojos>
+            <fluentSetters>true</fluentSetters>
+        </generate>
+        
+        <target>
+            <packageName>com.spot.auction.common.generated</packageName>
+            <directory>src/main/java</directory>
+        </target>
+    </generator>
+</configuration>
